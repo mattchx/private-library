@@ -5,19 +5,19 @@ import { Box, Button, Card, CardContent, CardActions, CardMedia, Container, Icon
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Book } from "../../lib/types";
-import api from '../api'
+import { api, useBooks } from '../api';
 
 export default function BookList() {
-  const [books, setBooks] = useState<Array<Book> | null>(null);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await api.get("/books")
-      console.log("DATA:", result.data)
-      setBooks(result.data)
+  const {books,isLoading, isError, mutate} = useBooks()
+
+  const handleDelete = async (id: number) => {
+    try {
+      await api.delete(`/books/${id}`);
+      mutate();
+    } catch (error) {
+      console.error("Error deleting book:", error);
     }
-    fetchData().catch(console.error)
-  }, [])
+  };
 
   return (
     <Box>
@@ -44,7 +44,7 @@ export default function BookList() {
                 </CardContent>
                 <CardActions>
                   <Button color="warning" size="small" startIcon={<EditIcon />}>Edit</Button>
-                  <Button color="error" size="small" startIcon={<DeleteIcon />}>Delete</Button>
+                  <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={() => handleDelete(book.id)}>Delete</Button>
                 </CardActions>
               </Card>
             </Grid>

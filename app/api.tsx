@@ -1,16 +1,21 @@
-import axios from 'axios'
+import axios from "axios";
+import useSWR, { SWRConfiguration } from "swr";
+import { Book } from '../lib/types'
 
-export const API_URL =
-  process.env.NODE_ENV === 'production' ? 'https://private-library.com/' : 'http://localhost:3001'
+export const api = axios.create({
+    baseURL: "http://localhost:3001", // Your mock server URL
+});
 
-const createInstance = (baseUrl: string) => {
-  const instance = axios.create({
-    baseURL: baseUrl,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  return instance
+// fetcher for SWR
+const fetcher = (url: string) => api.get(url).then((res) => res.data);
+
+export function useBooks() {
+    const { data, error, isLoading, mutate } = useSWR("/books", fetcher);
+
+    return {
+        books: data,
+        isLoading,
+        isError: error,
+        mutate,
+    };
 }
-
-export default createInstance(API_URL)
