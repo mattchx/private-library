@@ -14,8 +14,8 @@ export function NavLinks() {
         <Link component={NextLink} className={`NextLink ${pathname === '/dashboard' ? 'active' : ''}`} href="/dashboard">
           Home
         </Link>
-        <Link component={NextLink} className={`link ${pathname === '/about' ? 'active' : ''}`} href="/about">
-          About
+        <Link component={NextLink} className={`link ${pathname === '/dashboard/book-list' ? 'active' : ''}`} href="/dashboard/book-list">
+          Books
         </Link>
      
       </Toolbar>

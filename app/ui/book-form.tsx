@@ -5,6 +5,7 @@ import { Alert, Button, Chip, Container, TextField, Stack, Box, Typography, } fr
 import { useFormik } from 'formik';
 import { Book } from "../../lib/types";
 import * as Yup from 'yup';
+import api from '../api';
 
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
@@ -24,10 +25,15 @@ export default function BookForm() {
       description: ""
     } as Book,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-
-      alert(JSON.stringify(values, null, 2));
-      setSuccessMessage("Your book has been successfully added")
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values)
+      try {
+        await api.post("/books", values);
+        setSuccessMessage("Book added successfully!");
+        resetForm();
+      } catch (error) {
+        console.error("Error adding book:", error);
+      }
     }
   });
 
