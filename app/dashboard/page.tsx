@@ -1,5 +1,7 @@
 import { Container, CssBaseline, Button} from '@mui/material';
-import BookForm from '../ui/book-form'
+import AddBookForm from '../ui/add-book-form'
+import BookList from '../ui/book-list'
+
 
 export default function Home() {
   return (
@@ -8,8 +10,11 @@ export default function Home() {
       <Container>
 
         <h1>Home</h1>
-      
-        <BookForm />
+
+       <BookList /> 
+
+        <AddBookForm />
+        {/* <BookForm type="add" /> */}
       </Container>
     </main>
   );

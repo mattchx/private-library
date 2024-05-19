@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, Card, CardContent, CardActions, CardMedia, Container, IconButton, Grid, Typography } from '@mui/material';
+import { Alert, Box, Button, Card, CardContent, CardActions, CardMedia, Container, CircularProgress, Grid, Typography, Modal } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Book } from "../../lib/types";
 import { api, useBooks } from '../api';
 
 export default function BookList() {
-  const {books,isLoading, isError, mutate} = useBooks()
+  const { books, isLoading, isError, mutate } = useBooks()
 
   const handleDelete = async (id: number) => {
     try {
@@ -19,38 +19,48 @@ export default function BookList() {
     }
   };
 
+  if (isLoading) return <Box display="flex" justifyContent="center"><CircularProgress color="secondary" /></Box>
+  if (isError) return <Box display="flex" justifyContent="center"><Alert severity="error">There was a error fetching your books...</Alert></Box>
+  console.log("books: ", books)
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Book List
-      </Typography>
+    <>
+      <Box>
+        <Typography variant="h4" gutterBottom>
+          Book List
+        </Typography>
+
+        {(books.length === 0) && <Box marginTop={6} marginBottom={10}><Typography variant="h5" align="center">What are you waiting for? Add some books!</Typography></Box>}
         <Container>
-        <Grid container spacing={4}>
-          {books?.map((book) => (
-            <Grid item xs={6}>
-              <Card sx={{ maxWidth: 345 }} >
-                <CardMedia
-                  sx={{ height: 140 }}
-                  image="https://m.media-amazon.com/images/I/7173a8decnL._SL1500_.jpg"
-                  title="book image placeholder"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {book.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {book.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button color="warning" size="small" startIcon={<EditIcon />}>Edit</Button>
-                  <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={() => handleDelete(book.id)}>Delete</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+          <Grid container spacing={4}>
+
+            {books.length > 0 && books?.map((book: Book) => (
+              <Grid key={book.id} item xs={6}>
+                <Card sx={{ maxWidth: 345 }} >
+                  <CardMedia
+                    sx={{ height: 140 }}
+                    image="https://m.media-amazon.com/images/I/7173a8decnL._SL1500_.jpg"
+                    title="book image placeholder"
+                  />
+
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {book.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {book.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button color="warning" size="small" startIcon={<EditIcon />}>Edit</Button>
+                    <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={() => handleDelete(book.id)}>Delete</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))
+            }
+          </Grid>
         </Container>
-    </Box >
+      </Box >
+    </>
   );
 }
