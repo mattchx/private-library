@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react';
-import { Alert, Button, Card, CardContent, Container, TextField, Stack, Box, Typography, CardActionArea } from '@mui/material';
+import { Alert, Button, Card, CardContent, Container, TextField, Stack, Box, Typography, Link } from '@mui/material';
 import { useFormik } from 'formik';
 import { Book } from "../../lib/types";
 import * as Yup from 'yup';
@@ -45,7 +45,11 @@ function BookForm({ book, onCancel }: BookFormProps) {
 
         mutate();
         resetForm();
-        onCancel?.(); // Call the cancel callback if provided (in edit mode)
+        setTimeout(() => {
+          setSuccessMessage(null)
+          onCancel?.(); // Call the cancel callback if provided (in edit mode)
+        }, 3000)
+
       } catch (error) {
         console.error("Error adding/updating book:", error);
       }
@@ -53,68 +57,68 @@ function BookForm({ book, onCancel }: BookFormProps) {
   });
 
   return (
-        <CardContent>
-          <Typography variant="h4" gutterBottom>
-            {book ? "Edit Book" : "Add a book:"}
-          </Typography>
-          <form onSubmit={formik.handleSubmit}>
-            <Stack spacing={2}>
-              <TextField
-                fullWidth
-                id="title"
-                label="Title"
-                variant="outlined"
-                {...formik.getFieldProps("title")}
-              />
-              <TextField
-                fullWidth
-                id="author"
-                label="Author"
-                variant="outlined"
-                {...formik.getFieldProps("author")}
-              />
-              <TextField
-                fullWidth
-                id="genre"
-                label="Genre"
-                variant="outlined"
-                {...formik.getFieldProps("genre")}
-              />
-              <TextField
-                fullWidth
-                id="description"
-                label="Description"
-                variant="outlined"
-                {...formik.getFieldProps("description")}
-              />
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button type="submit" color="secondary" variant="contained">
-                  {book ? "Update Book" : "Add Book"}
-                </Button>
-                {onCancel && (
-                  <Button color="error" variant="contained" onClick={onCancel}>Cancel</Button>
-                )}
-              </Box>
+    <CardContent id="add-book-form">
+      {successMessage && <Alert variant="filled" severity="success" sx={{mb: 2}}>{successMessage}</Alert>}
+      <Typography variant="h4" gutterBottom>
+        {book ? "Edit Book" : <Link href="#add-book-form">Add a book:</Link>}
+      </Typography>
+      <form onSubmit={formik.handleSubmit}>
+        <Stack spacing={2}>
+          <TextField
+            fullWidth
+            id="title"
+            label="Title"
+            variant="outlined"
+            {...formik.getFieldProps("title")}
+          />
+          <TextField
+            fullWidth
+            id="author"
+            label="Author"
+            variant="outlined"
+            {...formik.getFieldProps("author")}
+          />
+          <TextField
+            fullWidth
+            id="genre"
+            label="Genre"
+            variant="outlined"
+            {...formik.getFieldProps("genre")}
+          />
+          <TextField
+            fullWidth
+            id="description"
+            label="Description"
+            variant="outlined"
+            {...formik.getFieldProps("description")}
+          />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button type="submit" color="secondary" variant="contained">
+              {book ? "Update Book" : "Add Book"}
+            </Button>
+            {onCancel && (
+              <Button color="error" variant="contained" onClick={onCancel}>Cancel</Button>
+            )}
+          </Box>
+        </Stack>
+      </form>
+    </CardContent>
 
-              {successMessage && <Alert severity="success">{successMessage}</Alert>}
-            </Stack>
-          </form>
-        </CardContent>
-      
   );
 }
 
 export function AddBookForm() {
   return (
-    <Container maxWidth="sm">
-      <Card>
-        <BookForm />
-      </Card>
-    </Container>
+    <Box marginBottom={10}>
+      <Container maxWidth="sm">
+        <Card>
+          <BookForm />
+        </Card>
+      </Container>
+    </Box>
   )
 }
 
 export function EditBookForm({ book, onCancel }: BookFormProps) {
-  return <BookForm book={book} onCancel={onCancel} />
+  return <Card><BookForm book={book} onCancel={onCancel} /></Card>
 }
- 
