@@ -1,5 +1,5 @@
-import { Container, CssBaseline, Button} from '@mui/material';
-import AddBookForm from '../ui/add-book-form'
+import { Container, CssBaseline, Card } from '@mui/material';
+import { AddBookForm } from '../ui/book-form'
 import BookList from '../ui/book-list'
 
 
@@ -11,10 +11,9 @@ export default function Home() {
 
         <h1>Home</h1>
 
-       <BookList /> 
-
+        <BookList />
         <AddBookForm />
-        {/* <BookForm type="add" /> */}
+
       </Container>
     </main>
   );

@@ -1,24 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Alert, Box, Button, Card, CardContent, CardActions, CardMedia, Container, CircularProgress, Grid, Typography, Modal } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Alert, Box, Button, Card, CardContent, CardActionArea, CardActions, CardMedia, Container, CircularProgress, Grid, Typography, Modal } from '@mui/material';
 import { Book } from "../../lib/types";
 import { api, useBooks } from '../api';
 import NextLink from 'next/link'
 
 export default function BookList() {
   const { books, isLoading, isError, mutate } = useBooks()
-
-  const handleDelete = async (id: number) => {
-    try {
-      await api.delete(`/books/${id}`);
-      mutate();
-    } catch (error) {
-      console.error("Error deleting book:", error);
-    }
-  };
 
   if (isLoading) return <Box display="flex" justifyContent="center"><CircularProgress color="secondary" /></Box>
   if (isError) return <Box display="flex" justifyContent="center"><Alert severity="error">There was a error fetching your books...</Alert></Box>
@@ -46,13 +34,11 @@ export default function BookList() {
                     {book.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {book.description}
+                    By: {book.author}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button color="info" component={NextLink} href={`/book/${book.id}`} size="small">View</Button>
-                  <Button color="warning" size="small" startIcon={<EditIcon />}>Edit</Button>
-                  <Button color="error" size="small" startIcon={<DeleteIcon />} onClick={() => handleDelete(book.id)}>Delete</Button>
+                  <Button color="info" variant="outlined" component={NextLink} href={`/book/${book.id}`} size="large" fullWidth>View</Button>
                 </CardActions>
               </Card>
             </Grid>

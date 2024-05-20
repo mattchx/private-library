@@ -19,7 +19,7 @@ interface BookFormProps {
   onCancel?: () => void; // Optional cancel callback
 }
 
-export default function BookForm({ book, onCancel }: BookFormProps) {
+function BookForm({ book, onCancel }: BookFormProps) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { mutate } = useBooks()
 
@@ -48,14 +48,11 @@ export default function BookForm({ book, onCancel }: BookFormProps) {
         onCancel?.(); // Call the cancel callback if provided (in edit mode)
       } catch (error) {
         console.error("Error adding/updating book:", error);
-        // You might want to handle errors more gracefully in your UI
       }
     }
   });
 
   return (
-    <Container maxWidth="sm">
-      {/* <Card variant="outlined"> */}
         <CardContent>
           <Typography variant="h4" gutterBottom>
             {book ? "Edit Book" : "Add a book:"}
@@ -103,7 +100,21 @@ export default function BookForm({ book, onCancel }: BookFormProps) {
             </Stack>
           </form>
         </CardContent>
-      {/* </Card> */}
-    </Container>
+      
   );
 }
+
+export function AddBookForm() {
+  return (
+    <Container maxWidth="sm">
+      <Card>
+        <BookForm />
+      </Card>
+    </Container>
+  )
+}
+
+export function EditBookForm({ book, onCancel }: BookFormProps) {
+  return <BookForm book={book} onCancel={onCancel} />
+}
+ 
