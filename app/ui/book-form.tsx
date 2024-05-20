@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react';
-import { Alert, Button, Card, CardContent, Container, TextField, Stack, Box, Typography, } from '@mui/material';
+import { Alert, Button, Card, CardContent, Container, TextField, Stack, Box, Typography, CardActionArea } from '@mui/material';
 import { useFormik } from 'formik';
 import { Book } from "../../lib/types";
 import * as Yup from 'yup';
@@ -14,12 +14,17 @@ const validationSchema = Yup.object({
   description: Yup.string()
 });
 
-export default function BookForm() {
+interface BookFormProps {
+  book?: Book; // Optional book object for editing
+  onCancel?: () => void; // Optional cancel callback
+}
+
+export default function BookForm({ book, onCancel }: BookFormProps) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { mutate } = useBooks()
 
   const formik = useFormik({
-    initialValues: {
+    initialValues: book || {
       title: "",
       author: "",
       genre: "",
@@ -27,24 +32,33 @@ export default function BookForm() {
     } as Book,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log(values)
       try {
-        await api.post("/books", values);
-        setSuccessMessage("Book successfully added to library!");
-        mutate("/books");
+        if (book) {
+          // Edit mode: Update existing book
+          await api.put(`/books/${book.id}`, values);
+          setSuccessMessage("Book updated successfully!");
+        } else {
+          // Add mode: Create new book
+          await api.post("/books", values);
+          setSuccessMessage("Book successfully added to library!");
+        }
+
+        mutate();
         resetForm();
+        onCancel?.(); // Call the cancel callback if provided (in edit mode)
       } catch (error) {
-        console.error("Error adding book:", error);
+        console.error("Error adding/updating book:", error);
+        // You might want to handle errors more gracefully in your UI
       }
     }
   });
 
   return (
     <Container maxWidth="sm">
-      <Card variant="outlined">
+      {/* <Card variant="outlined"> */}
         <CardContent>
           <Typography variant="h4" gutterBottom>
-            Add a book:
+            {book ? "Edit Book" : "Add a book:"}
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <Stack spacing={2}>
@@ -76,13 +90,20 @@ export default function BookForm() {
                 variant="outlined"
                 {...formik.getFieldProps("description")}
               />
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button type="submit" color="secondary" variant="contained">
+                  {book ? "Update Book" : "Add Book"}
+                </Button>
+                {onCancel && (
+                  <Button color="error" variant="contained" onClick={onCancel}>Cancel</Button>
+                )}
+              </Box>
 
-              <Button color="secondary" variant="contained" type='submit'>Submit</Button>
               {successMessage && <Alert severity="success">{successMessage}</Alert>}
             </Stack>
           </form>
         </CardContent>
-      </Card>
+      {/* </Card> */}
     </Container>
-  )
+  );
 }
