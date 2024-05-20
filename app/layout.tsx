@@ -1,25 +1,32 @@
-import type { Metadata } from "next";
+'use client'
 import { Inter } from "next/font/google";
-
 import { NavLinks } from './ui/nav-links'
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { usePathname } from 'next/navigation'
+import CssBaseline from '@mui/material/CssBaseline';
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Private Library",
-  description: "An app to effortlessly organize your books.",
-};
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname()
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NavLinks />
-        {children}
+      <body suppressHydrationWarning={true} className={inter.className}>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          {pathname != "/" && <NavLinks />}
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

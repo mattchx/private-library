@@ -44,7 +44,7 @@ export default function BookDetails({ params }: BookDetailsProps) {
   return (
     <>
       <Dialog open={open} onClose={handleClose} maxWidth="xl">
-      <EditBookForm book={book} />
+        <EditBookForm book={book} />
       </Dialog>
       <Container maxWidth="md">
         <Card variant="outlined">
@@ -72,7 +72,7 @@ export default function BookDetails({ params }: BookDetailsProps) {
             </CardActions>
           </CardContent>
         </Card>
-        <Button color="secondary" startIcon={<ArrowBack/>} variant="outlined" onClick={ () => router.back()}>Go Back</Button>
+        <Button color="secondary" startIcon={<ArrowBack />} variant="outlined" onClick={() => router.back()}>Go Back</Button>
       </Container>
     </>
   )
