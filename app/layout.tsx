@@ -1,15 +1,15 @@
-'use client'
+"use client";
 import { Inter } from "next/font/google";
-import { NavLinks } from './ui/nav-links'
+import { NavLinks } from "./ui/nav-links";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { usePathname } from 'next/navigation'
-import CssBaseline from '@mui/material/CssBaseline';
+import { usePathname } from "next/navigation";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
 });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
