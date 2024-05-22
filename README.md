@@ -1,37 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Private Library
+
+This project is a full-stack library management application designed to help users easily add, view, edit, and delete books from their collection. It's built with modern technologies like Next.js, SWR, TypeScript, Axios, Formik, and Material UI (MUI) for a robust and user-friendly experience.
+
+## Features
+
+- **Add New Books:** Easily input book details (title, author, genre, description) through a form.
+- **View Book List:** See a clear list of all books in your library.
+- **Edit Book Details:** Update any book's information with a seamless editing experience.
+- **Delete Books:** Remove books from your collection when needed.
+- **Form Validation:** Uses Formik and Yup for user-friendly form validation.
+- **Data Fetching & Caching:** Leverages SWR for efficient data fetching and caching from the server.
+- **UI with MUI:** Employs Material UI components for a polished and responsive interface.
+- **TypeScript:** Written entirely in TypeScript for improved type safety and maintainability.
+
+## Technologies Used
+    - Next.js (App Router)
+    - React.js
+    - TypeScript
+    - SWR (Data Fetching)
+    - Axios (HTTP Requests)
+    - Formik (Form Management)
+    - Yup (Schema Validation)
+    - Material UI (MUI 5)
 
 ## Getting Started
 
-First, run the development server:
+1.  **Clone the Repository:**
+    ```bash
+    git clone [https://github.com/mattchx/private-library.git)
+    ```
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+4.  **Start the Development Server:**
+    ```bash
+    npm run dev
+    ```
+5.  **Open the App:**
+    Navigate to `http://localhost:3000` in your browser.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Note**: This application requires a backend server to function properly. Contact me for more information.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `app/`: Main application components and routes (using Next.js's App Router)
+  - `ui/`: Reusable UI components (BookForm, BookList, etc.)
+  - `dashboard/`: Main application layout.
+  - `book/`: UI for individual cook view.
+  - `api/`: Axios and SWR data fetching setup.  
+- `lib/`: Utility functions and type definitions.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contributing
 
-## Learn More
+Contributions are welcome! Please feel free to submit issues or pull requests.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# private-library
+This project is licensed under the MIT License.
