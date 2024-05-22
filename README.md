@@ -62,7 +62,6 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 This project is licensed under the MIT License.
 
 ## App Photos
-<img width="500" alt="Screenshot 2024-05-22 at 12 23 03 PM" src="https://github.com/mattchx/private-library/assets/55170649/3aa15452-586e-4bbd-b09a-a8186ee5331f">
 <img width="500" alt="Screenshot 2024-05-22 at 12 23 18 PM" src="https://github.com/mattchx/private-library/assets/55170649/4949cf8c-76fa-4a64-8e34-1a4646f7f17a">
 <img width="500" alt="Screenshot 2024-05-22 at 12 23 33 PM" src="https://github.com/mattchx/private-library/assets/55170649/d5b920df-007b-451d-9708-46908d50f65a">
 <img width="500" alt="Screenshot 2024-05-22 at 12 23 45 PM" src="https://github.com/mattchx/private-library/assets/55170649/de90b40a-6521-45fc-b1ae-7abcc2112ea5">
